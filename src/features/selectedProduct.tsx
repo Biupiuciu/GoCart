@@ -1,6 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { product: [] };
+const initialState = {
+  product: {
+    id: -1,
+    title: "",
+    price: 0,
+    image: "",
+    category: "",
+    description: "",
+  },
+};
 export const selectedproductsSlice = createSlice({
   name: "selectedproduct",
   initialState,
@@ -9,7 +18,14 @@ export const selectedproductsSlice = createSlice({
       state.product = action.payload;
     },
     Remove_SelectedProduct: (state) => {
-      state.product = [];
+      state.product = {
+        id: -1,
+        title: "",
+        price: 0,
+        image: "",
+        category: "",
+        description: "",
+      };
     },
   },
 });

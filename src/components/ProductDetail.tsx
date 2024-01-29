@@ -1,13 +1,17 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { IRootState } from "../main";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Select_Product,
   Remove_SelectedProduct,
 } from "../features/selectedProduct";
 export const ProductDetail = () => {
-  const product = useSelector((state) => state.selectproduct.product);
+  const product = useSelector(
+    (state: IRootState) => state.selectproduct.product
+  );
+
   const { id, title, price, image, category, description } = product;
   const { productId } = useParams();
   const dispatch = useDispatch();
@@ -15,14 +19,14 @@ export const ProductDetail = () => {
 
   useEffect(() => {
     const fetchDetail = async () => {
-      const response = await axios
-        .get(`https://fakestoreapi.com/products/${productId}`)
-        .catch((err) => {
-          console.log("Error:", err);
-        });
-      console.log(response.data);
-
-      dispatch(Select_Product(response.data));
+      try {
+        const response = await axios.get(
+          `https://fakestoreapi.com/products/${productId}`
+        );
+        dispatch(Select_Product(response.data));
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     if (productId && productId !== "") fetchDetail();
@@ -34,7 +38,7 @@ export const ProductDetail = () => {
 
   return (
     <div className="ui grid container" style={{ marginTop: "20px" }}>
-      {Object.keys(product).length === 0 ? (
+      {id === -1 ? (
         <div>...Loading</div>
       ) : (
         <>
@@ -52,7 +56,7 @@ export const ProductDetail = () => {
                   </h2>
                   <h3 className="ui brown block header">{category} </h3>
                   <p>{description}</p>
-                  <div className="ui vertical animated button" tabIndex="0">
+                  <div className="ui vertical animated button">
                     <div className="hidden content">
                       <i className="shop icon"></i>
                     </div>
@@ -64,7 +68,6 @@ export const ProductDetail = () => {
           </div>
         </>
       )}
-      ;
     </div>
   );
 };
