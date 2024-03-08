@@ -5,12 +5,12 @@ import { ProductsList } from "./components/ProductsList";
 import { Cart } from "./components/Cart";
 import { Home } from "./components/Home";
 import { LogIn } from "./components/LogIn";
-import { CheckOutSucceed } from "./components/CheckOutSucceed";
+import { StripeContainer } from "./components/StripeContainer";
 import { useSelector } from "react-redux";
 import { IRootState } from "./main";
 import { Profile } from "./components/Profile";
 import { useEffect } from "react";
-
+//import "./App.css";
 function App() {
   const isCartOpen = useSelector((state: IRootState) => state.cart.isCartOpen);
   useEffect(() => {
@@ -33,8 +33,8 @@ function App() {
               />
               <Route path="/product/:webCategory?" element={<ProductsList />} />
               <Route path="/login" element={<LogIn />} />
-              <Route path="/checkout" element={<CheckOutSucceed />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/checkout" element={<StripeContainer />} />
               <Route>404 Not Found</Route>
             </Routes>
           </div>

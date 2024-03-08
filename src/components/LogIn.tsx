@@ -70,7 +70,7 @@ export const LogIn = () => {
           <form onSubmit={handlesubmit} className="my-8 flex justify-center ">
             <div>
               <div className=" mx-auto my-4 gap-4 ">
-                <div>Username </div>
+                <div>Username (johnd) </div>
                 <input
                   type="text"
                   name=""
@@ -83,7 +83,7 @@ export const LogIn = () => {
                 />
               </div>
               <div className="mx-auto my-8 ">
-                <div>Password </div>
+                <div>Password (m38rmF$) </div>
                 <input
                   type="password"
                   name=""

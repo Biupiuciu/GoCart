@@ -3,13 +3,12 @@ import { IconButton } from "@mui/material";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import Pic1 from "../assets/clothing.jpg";
+import Pic2 from "../assets/jewelry.webp";
+import Pic3 from "../assets/device.png";
 export const Slide = () => {
   const [imageIndex, setIndex] = useState(0);
-  const images = [
-    { path: "src/assets/clothing.jpg" },
-    { path: "src/assets/jewelry.webp" },
-    { path: "src/assets/device.png" },
-  ];
+  const images = [Pic1, Pic2, Pic3];
   useEffect(() => {
     const intervalId = setInterval(() => {
       imageIndex == images.length - 1
@@ -31,7 +30,7 @@ export const Slide = () => {
             style={{ transform: `translateX(-${imageIndex * 100}%)` }}
           >
             {images.map((image) => {
-              return <img src={image.path} alt="" className="object-cover" />;
+              return <img src={image} alt="" className="object-cover" />;
             })}
           </div>
         </div>

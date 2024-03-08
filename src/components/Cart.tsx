@@ -12,7 +12,6 @@ import {
   Decrease_Item,
   Set_IsCartOpen,
   Remove_from_Cart,
-  CLEAR_Cart,
 } from "../features/cart";
 import { useState, useEffect } from "react";
 export const Cart = () => {
@@ -41,18 +40,20 @@ export const Cart = () => {
       return null;
     }
     try {
+      dispatch(Set_IsCartOpen());
+      navigate("/checkout");
       const cartAdd = carts.map((cart) => {
         const { id: productId, count: quantity } = cart;
         return { productId, quantity };
       });
+
       const response = await axios.post("https://fakestoreapi.com/carts", {
         userId: user.user.id,
         date: new Date(),
         products: cartAdd,
       });
       console.log(response.data);
-      dispatch(CLEAR_Cart());
-      navigate("/checkout");
+      //dispatch(CLEAR_Cart());
     } catch (error) {
       console.log(error);
     }

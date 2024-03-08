@@ -42,7 +42,7 @@ export const Product = () => {
   };
   const renderList = products.map((product: any) => {
     const { id, title, price, image, rating } = product;
-    console.log("ID:", id, " ", title.includes(searchTerm));
+    //console.log("ID:", id, " ", title.includes(searchTerm));
     if (!title.toLowerCase().includes(finalTerm.toLowerCase())) return <></>;
     return (
       <>
