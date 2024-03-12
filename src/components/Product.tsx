@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import fullStar from "../assets/star.png";
 import halfStar from "../assets/rating.png";
 import { useSelector, useDispatch } from "react-redux";
@@ -7,6 +7,7 @@ import { Add_to_Cart, Increase_Item } from "../features/cart";
 import { useState, useEffect, useRef } from "react";
 import { Search } from "@mui/icons-material";
 import { useParams } from "react-router-dom";
+import { Categories } from "./Categories";
 export const Product = () => {
   const productsData = useSelector(
     (state: IRootState) => state.product.product
@@ -19,6 +20,10 @@ export const Product = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [finalTerm, setFinalTerm] = useState("");
   const [products, setProducts] = useState(productsData);
+  const currentLocation = useLocation().pathname;
+  const location = currentLocation.split("/").filter((c) => {
+    return c != "";
+  });
 
   const SearchHandler = () => {
     finalTerm == "" && searchRef.current?.focus();
@@ -47,8 +52,12 @@ export const Product = () => {
     return (
       <>
         <div key={id}>
-          <div className=" w-full overflow-auto border rounded-lg  p-4 md:p-8 lg:p-10 bg-white ">
-            <Link to={`/product/item/${id}`}>
+          <div className=" w-full overflow-auto border rounded-lg  p-4 md:p-8 lg:p-10 bg-white text-slate-950">
+            <Link
+              to={`/product/item/${id}`}
+              state={currentLocation}
+              className="hover:text-slate-950"
+            >
               <div className="w-full  aspect-[4/5]   ">
                 <img
                   className="h-full m-auto transition-transform duration-300 transform hover:scale-105"
@@ -58,7 +67,11 @@ export const Product = () => {
               </div>
             </Link>
             <div className="pt-4">
-              <Link to={`/product/item/${id}`}>
+              <Link
+                to={`/product/item/${id}`}
+                state={currentLocation}
+                className="hover:text-slate-950"
+              >
                 <div className=" flex h-16 items-center justify-center text-center font-extrabold py-auto ">
                   <p className="line-clamp-2 ">{title}</p>
                 </div>
@@ -112,6 +125,7 @@ export const Product = () => {
 
   return (
     <>
+      {location[location.length - 1] == "product" && <Categories />}
       <div
         className={`${
           finalTerm ? "" : "mb-8"

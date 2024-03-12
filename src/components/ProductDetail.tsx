@@ -17,7 +17,6 @@ export const ProductDetail = () => {
   const { id, title, price, image, category, description } = product;
   const { productId } = useParams();
   const dispatch = useDispatch();
-  console.log(productId);
 
   useEffect(() => {
     const fetchDetail = async () => {
@@ -40,10 +39,10 @@ export const ProductDetail = () => {
   return (
     <div className="">
       {id === -1 ? (
-        <div className="pt-4 px-4 sm:px-10  md:px-16 lg:px-24">...Loading</div>
+        <div className="pt-8 px-4 sm:px-10  md:px-16 lg:px-24">...Loading</div>
       ) : (
         <>
-          <div className="sm:grid grid-cols-2 lg:grid-cols-5 flex flex-wrap box-border gap-10 p-10  md:p-16 lg:p-24 items-center justify-center">
+          <div className="sm:grid grid-cols-2 lg:grid-cols-5 flex flex-wrap box-border gap-10 pt-10 px-10  md:px-16 lg:px-24 items-center justify-center">
             <div className="lg:col-span-2 flex items-start justify-center  ">
               <div className="flex bg-white border rounded-2xl w-full aspect-square items-center">
                 <img

@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../main";
 import { LOGOUT } from "../features/user";
 import { useEffect, useState } from "react";
-
+import { BreadCrumbs } from "./BreadCrumbs";
+import weblogo from "../assets/Website.png";
 export const Header = () => {
   const location = useLocation();
   const { pathname } = location;
@@ -15,6 +16,7 @@ export const Header = () => {
   const isLogin = useSelector((state: IRootState) => state.user.isLogin);
   const [userOpen, setUserOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const isHomePage = useLocation().pathname == "/";
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
@@ -30,14 +32,16 @@ export const Header = () => {
   const ListHorizontal = () => {
     return (
       <ul
-        className={`flex items-center gap-6 justify-center lg:gap-12 grow mx-1 text-slate-400 `}
+        className={`flex items-center gap-6 justify-center lg:gap-12 flex-1 mx-1 text-slate-950 `}
       >
         <li>
           <NavLink to="/product/">
             <div
-              className={`text-center ${
-                pathname == "/product/" && "text-slate-950 font-bold "
-              } hover:font-bold hover:text-blue-700 `}
+              className={`text-center border-b-2 ${
+                pathname == "/product/"
+                  ? "text-amber-500   border-amber-500"
+                  : "border-white"
+              }  hover:text-amber-500 `}
             >
               All
             </div>
@@ -46,9 +50,11 @@ export const Header = () => {
         <li>
           <NavLink to="/product/men">
             <div
-              className={`text-center ${
-                pathname == "/product/men" && "text-slate-950 font-bold "
-              } hover:font-bold hover:text-blue-700 `}
+              className={`text-center border-b-2 ${
+                pathname == "/product/men"
+                  ? "text-amber-500   border-amber-500"
+                  : "border-white"
+              }  hover:text-amber-500 `}
             >
               Men
             </div>
@@ -57,9 +63,11 @@ export const Header = () => {
         <li>
           <NavLink to="/product/women">
             <div
-              className={`text-center ${
-                pathname == "/product/women" && "text-slate-950 font-bold "
-              } hover:font-bold hover:text-blue-700 `}
+              className={`text-center border-b-2  ${
+                pathname == "/product/women"
+                  ? "text-amber-500   border-amber-500"
+                  : "border-white"
+              }  hover:text-amber-500 `}
             >
               Women
             </div>
@@ -68,9 +76,11 @@ export const Header = () => {
         <li>
           <NavLink to="/product/jewelery">
             <div
-              className={`text-center ${
-                pathname == "/product/jewelery" && "text-slate-950 font-bold "
-              } hover:font-bold hover:text-blue-700 `}
+              className={`text-center border-b-2  ${
+                pathname == "/product/jewelery"
+                  ? "text-amber-500   border-amber-500"
+                  : "border-white"
+              }  hover:text-amber-500 `}
             >
               Jewelery
             </div>
@@ -79,10 +89,11 @@ export const Header = () => {
         <li>
           <NavLink to="/product/electronics">
             <div
-              className={`text-center ${
-                pathname == "/product/electronics" &&
-                "text-slate-950 font-bold "
-              } hover:font-bold hover:text-blue-700 `}
+              className={`text-center border-b-2  ${
+                pathname == "/product/electronics"
+                  ? "text-amber-500   border-amber-500"
+                  : "border-white"
+              }  hover:text-amber-500 `}
             >
               Electronics
             </div>
@@ -127,18 +138,16 @@ export const Header = () => {
   };
 
   return (
-    <div>
-      <div className="h-16 border-b py-2.5  px-4 sm:px-10  md:px-16 lg:px-24 ">
-        <div className="h-full">
-          <nav className="flex gap-2">
+    <div className="">
+      <div className="h-16 border-b py-2.5 px-4 sm:px-10  md:px-16 lg:px-24">
+        <div className="h-full w-full ">
+          <nav className="flex gap-2 ">
             <Link to="/">
-              <div className="flex justify-center items-center h-full">
-                <h2 className="text-2xl md:text-4xl font-medium">GoCart</h2>
-              </div>
+              <img src={weblogo} alt="" className="h-12" />
             </Link>
 
             {windowWidth < 500 ? (
-              <div className="grow"></div>
+              <div className="grow  "></div>
             ) : (
               <ListHorizontal />
             )}
@@ -176,7 +185,7 @@ export const Header = () => {
             </Badge>
             {!isLogin && (
               <Link to="/login">
-                <div className="h-full flex justify-center items-center  min-w-20 rounded-full border hover:border-slate-950 hover:text-slate-950">
+                <div className="h-10 flex justify-center items-center  min-w-20 rounded-full border hover:border-slate-950 hover:text-slate-950">
                   <p className="text-center">Log in</p>
                 </div>
               </Link>
@@ -204,6 +213,7 @@ export const Header = () => {
           <ListHorizontal />
         </div>
       )}
+      {!isHomePage && <BreadCrumbs />}
     </div>
   );
 };

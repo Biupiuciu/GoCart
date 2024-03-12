@@ -15,21 +15,35 @@ export default function PaymentForm() {
   carts.map((item) => {
     totalPrice = totalPrice + item.count * item.price;
   });
+  const handleCart = async () => {
+    try {
+      const cartAdd = carts.map((cart) => {
+        const { id: productId, count: quantity } = cart;
+        return { productId, quantity };
+      });
+      await axios.post("https://fakestoreapi.com/carts", {
+        userId: user.user.id,
+        date: new Date(),
+        products: cartAdd,
+      });
+      dispatch(CLEAR_Cart());
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     const cardElement = elements?.getElement(CardElement);
     if (cardElement) {
-      console.log("cardElement!");
       const result = await stripe?.createPaymentMethod({
         type: "card",
         card: cardElement,
       });
       if (!result?.error) {
         try {
-          console.log("try ", totalPrice);
           const paymenMethod = result?.paymentMethod;
           if (paymenMethod) {
-            console.log("try paymenMethod");
             const { id } = paymenMethod;
             const response = await axios.post("http://localhost:4000/payment", {
               amount: totalPrice * 100,
@@ -37,27 +51,13 @@ export default function PaymentForm() {
             });
             console.log(response.data.success, " ", response.data.message);
             if (response.data.success) {
-              try {
-                const cartAdd = carts.map((cart) => {
-                  const { id: productId, count: quantity } = cart;
-                  return { productId, quantity };
-                });
-                await axios.post("https://fakestoreapi.com/carts", {
-                  userId: user.user.id,
-                  date: new Date(),
-                  products: cartAdd,
-                });
-                dispatch(CLEAR_Cart());
-              } catch (error) {
-                console.log(error);
-              } finally {
-                console.log("Success!");
-                setIsSuccess(true);
-              }
+              handleCart;
             }
           }
         } catch (error) {
           console.log("Error:", error);
+        } finally {
+          setIsSuccess(true);
         }
       } else {
         console.log(result.error.message);
